@@ -1,4 +1,4 @@
-# acodemind02
+# Expense Tracker
 
 A new Flutter project.
 
