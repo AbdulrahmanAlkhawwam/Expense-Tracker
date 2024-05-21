@@ -1,6 +1,7 @@
 import 'package:acodemind02/widget/Chart.dart';
 import 'package:acodemind02/widget/Expenses_list.dart';
 import 'package:acodemind02/widget/New_expense.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'models/Expense.dart';
 
@@ -29,7 +30,6 @@ class _ExpensesState extends State<Expenses>{
   void _addNewExpense (Expense expense){
     setState(() {
       _registeredExpenses.add(expense);
-      print (_registeredExpenses.toList().toString());
     });
   }
 
@@ -37,7 +37,6 @@ class _ExpensesState extends State<Expenses>{
     final expenseIndex = _registeredExpenses.indexOf(expense);
     setState(() {
       _registeredExpenses.remove(expense);
-      print (_registeredExpenses);
     });
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -59,9 +58,10 @@ class _ExpensesState extends State<Expenses>{
 
   @override
   Widget build (BuildContext context){
+    double width = MediaQuery.of(context).size.width;
     late Widget mainContent ;
     if (_registeredExpenses.isEmpty){
-      mainContent =  Column(
+      mainContent = const Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -84,20 +84,46 @@ class _ExpensesState extends State<Expenses>{
       );
     }
     else {
-      mainContent =
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Chart(expenses: _registeredExpenses),
-              Expanded(
-                child: Expenses_list(
-                  expenses: _registeredExpenses,
-                  removeExpense: _removeExpense,
+      if (width < 600){
+        mainContent =
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Chart(expenses: _registeredExpenses),
+                Expanded(
+                  child: Expenses_list(
+                    expenses: _registeredExpenses,
+                    removeExpense: _removeExpense,
+                  ),
                 ),
-              ),
-            ],
-          );
-    }
+              ],
+            );
+
+      }
+      else
+        {
+          mainContent =
+              Row(
+                children: [
+                  Expanded(
+                      child: Chart(
+                          expenses: _registeredExpenses,
+                      ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Expenses_list(
+                        expenses: _registeredExpenses,
+                        removeExpense: _removeExpense,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+
+        }
+     }
 
     return Scaffold(
       appBar: AppBar(

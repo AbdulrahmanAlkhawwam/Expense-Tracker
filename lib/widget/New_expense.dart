@@ -61,118 +61,118 @@ class _New_expenseState extends State<New_expense> {
   @override
   Widget build (BuildContext context){
     return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          const SizedBox(height: 50,),
-          const Text(
-            "New Expenses",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.w600
-            ),
-          ),
-          const SizedBox(height: 20,),
-          TextField(
-            controller: _titleController,
-            keyboardType: TextInputType.text,
-            maxLength: 50,
-            decoration: const InputDecoration(
-              label: Text("Title"),
-            ),
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: _amountController,
-
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    prefixText: '\$ ',
-                    label: Text("Amount"),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 15),
-              Expanded(
-                child: IconButton(
-                  icon:const  Row (
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text (
-                        "Selected Date",
-                        style: TextStyle(
-                            fontSize: 17.5,
-                            fontWeight: FontWeight.w400
-                        ),
-                      ),
-                      SizedBox(width: 5,),
-                      Icon(Icons.date_range)
-                    ],
-                  ),
-                  onPressed: (){
-                    _presentDataPicker();
-                  },
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 30,),
-          Row (children: [
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            const SizedBox(height: 50,),
             const Text(
-              "Select Category for Expenses : ",
+              "New Expenses",
               style: TextStyle(
-                fontSize: 17.5,
+                fontSize: 30,
+                fontWeight: FontWeight.w600
               ),
             ),
-            const Spacer(),
-            DropdownButton(
-              value: _selectedCategory,
-              items: Category.values.map(
-                      (category) => DropdownMenuItem(
-                          value: category,
-                          child: Text(
-                              category.name.toUpperCase()
-                          )
-                      )
-              ).toList(),
-              onChanged: (value) {
-                if (value== null ) return ;
-                setState(()=>_selectedCategory = value);
-              },
+            const SizedBox(height: 20,),
+            TextField(
+              controller: _titleController,
+              keyboardType: TextInputType.text,
+              maxLength: 50,
+              decoration: const InputDecoration(
+                label: Text("Title"),
+              ),
             ),
-            const Spacer(),
-          ],
-          ),
-          const Spacer(),
-          Row (
-            children: [
-             Expanded(
-               child: TextButton(
-                   onPressed: (){Navigator.pop(context);},
-                   child: const Text("cancel")
-               ),
-             ),
-              Expanded(
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                        //backgroundColor: MaterialStateColor.resolveWith((states) => Colors.indigo)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _amountController,
+
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      prefixText: '\$ ',
+                      label: Text("Amount"),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _submitExpenseData();
-                      });
+                  ),
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: IconButton(
+                    icon:const  Row (
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text (
+                          "Selected Date",
+                          style: TextStyle(
+                              fontSize: 17.5,
+                              fontWeight: FontWeight.w400
+                          ),
+                        ),
+                        SizedBox(width: 5,),
+                        Icon(Icons.date_range)
+                      ],
+                    ),
+                    onPressed: (){
+                      _presentDataPicker();
                     },
-                    child: const Text ("Save Expense",style: TextStyle(/*color: Colors.white*/),)
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 30,),
+            Row (children: [
+              const Text(
+                "Select Category for Expenses : ",
+                style: TextStyle(
+                  fontSize: 17.5,
                 ),
               ),
+              const Spacer(),
+              DropdownButton(
+                value: _selectedCategory,
+                items: Category.values.map(
+                        (category) => DropdownMenuItem(
+                            value: category,
+                            child: Text(
+                                category.name.toUpperCase()
+                            )
+                        )
+                ).toList(),
+                onChanged: (value) {
+                  if (value== null ) return ;
+                  setState(()=>_selectedCategory = value);
+                },
+              ),
+              const Spacer(),
             ],
-          ),
-        ],
-      ),
+            ),
+            const Spacer(),
+            Row (
+              children: [
+               Expanded(
+                 child: TextButton(
+                     onPressed: (){Navigator.pop(context);},
+                     child: const Text("cancel")
+                 ),
+               ),
+                Expanded(
+                  child: ElevatedButton(
+                      style: const ButtonStyle(
+                          //backgroundColor: MaterialStateColor.resolveWith((states) => Colors.indigo)
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _submitExpenseData();
+                        });
+                      },
+                      child: const Text ("Save Expense",style: TextStyle(/*color: Colors.white*/),)
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
     );
   }
 }

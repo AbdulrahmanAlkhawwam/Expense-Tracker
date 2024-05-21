@@ -1,7 +1,15 @@
 import 'package:acodemind02/Expenses.dart';
 import 'package:flutter/material.dart';
 
-void main (){runApp(MyApp());}
+void main (){
+ /* WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then((fn){*/
+    runApp(MyApp());
+ // });
+
+}
 
 final ColorScheme kColorScheme = ColorScheme.fromSeed(seedColor: Colors.indigo);
 final ColorScheme kDarkColorScheme = ColorScheme.fromSeed(brightness: Brightness.dark,seedColor: const Color.fromARGB(255, 5, 99, 125));
@@ -9,6 +17,7 @@ final ColorScheme kDarkColorScheme = ColorScheme.fromSeed(brightness: Brightness
 class MyApp extends StatelessWidget {
   @override
   Widget build(context) {
+
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       darkTheme: ThemeData.dark()

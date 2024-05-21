@@ -1,8 +1,6 @@
 import 'package:acodemind02/main.dart';
 import 'package:acodemind02/widget/Expenses_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../models/Expense.dart';
 
 class Expenses_list extends StatelessWidget{
@@ -10,7 +8,6 @@ class Expenses_list extends StatelessWidget{
 
   final List <Expense> expenses ;
   final void Function(Expense expense) removeExpense;
-
 
   @override
   Widget build (BuildContext context){
