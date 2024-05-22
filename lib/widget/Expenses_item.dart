@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:acodemind02/models/Expense.dart';
 
@@ -21,11 +22,16 @@ class Expenses_item extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(expense.title,
-                      style: const TextStyle(
-                          fontSize: 22.5, fontWeight: FontWeight.w500)
-                      ,),
-                    const Spacer(),
+                    Expanded(
+                      child: Text(
+                        expense.title,
+                        style: const TextStyle(
+                          fontSize: 22.5,
+                          fontWeight: FontWeight.w500,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
                     Icon(
                       categoryIcon[expense.category],
                     ),

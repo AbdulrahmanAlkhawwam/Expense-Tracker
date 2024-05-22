@@ -1,4 +1,6 @@
+import 'package:acodemind02/BoundedListView.dart';
 import 'package:acodemind02/main.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../models/Expense.dart';
 
@@ -25,9 +27,7 @@ class _New_expenseState extends State<New_expense> {
       lastDate: now,
       initialDate: now,
     );
-    setState(() {
-      _selectedDate = pickedDate ;
-    });
+    setState(() => _selectedDate = pickedDate);
   }
 
   void _submitExpenseData (){
@@ -61,116 +61,156 @@ class _New_expenseState extends State<New_expense> {
 
   @override
   Widget build (BuildContext context){
-    return Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 50,),
-            const Text(
-              "New Expenses",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w600
-              ),
-            ),
-            const SizedBox(height: 20,),
-            TextField(
-              controller: _titleController,
-              keyboardType: TextInputType.text,
-              maxLength: 50,
-              decoration: const InputDecoration(
-                label: Text("Title"),
-              ),
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _amountController,
-
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      prefixText: '\$ ',
-                      label: Text("Amount"),
-                    ),
+    final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Padding(
+            padding: MediaQuery.of(context).size.width <=600
+                ? EdgeInsets.fromLTRB(16, 16, 16, keyboardSpace + 16)
+                : EdgeInsets.fromLTRB(48, 16, 48, keyboardSpace + 16),
+            child: BoundedListView(
+              children:  [
+                const Text(
+                  "New Expenses",
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600
                   ),
                 ),
-                const SizedBox(width: 15),
-                Expanded(
-                  child: IconButton(
-                    icon: Row (
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text (
-                          "Selected Date",
-                          style: const TextStyle().copyWith(
-                              fontSize: 17.5,
-                              fontWeight: FontWeight.w400,
-                              color: Brightness.dark!=MediaQuery.of(context).platformBrightness?kColorScheme.onSecondaryContainer:kDarkColorScheme.onSecondaryContainer
-                          ),
+                if (MediaQuery.of(context).size.width >= 600)
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Expanded(
+                      child: TextField(
+                        controller: _titleController,
+                        keyboardType: TextInputType.text,
+                        maxLength: 50,
+                        decoration: const InputDecoration(
+                          label: Text("Title"),
                         ),
-                        const SizedBox(width: 5,),
-                        Icon(Icons.date_range,color: Brightness.dark!=MediaQuery.of(context).platformBrightness?kColorScheme.onSecondaryContainer:kDarkColorScheme.onSecondaryContainer,)
-                      ],
+                      ),
                     ),
-                    onPressed: (){
-                      _presentDataPicker();
-                    },
+                    const SizedBox(width: 10,),
+                    DropdownButton(
+                      value: _selectedCategory,
+                      items: Category.values.map(
+                              (category) => DropdownMenuItem(
+                              value: category,
+                              child: Text(
+                                  category.name.toUpperCase()
+                              )
+                          )
+                      ).toList(),
+                      onChanged: (value) {
+                        if (value== null ) return ;
+                        setState(()=>_selectedCategory = value);
+                      },
+                    ),
+                  ],)
+                else
+                TextField(
+                  controller: _titleController,
+                  keyboardType: TextInputType.text,
+                  maxLength: 50,
+                  decoration: const InputDecoration(
+                    label: Text("Title"),
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 30,),
-            Row (children: [
-               Text(
-                "Select Category for Expenses : ",
-                style: const TextStyle().copyWith(
-                  fontSize: 17.5,
-                  color: Brightness.dark!=MediaQuery.of(context).platformBrightness?kColorScheme.onSecondaryContainer:kDarkColorScheme.onSecondaryContainer
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _amountController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          prefixText: '\$ ',
+                          label: Text("Amount"),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 25),
+                    IconButton(
+                      icon: Row (
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text (
+                            "Selected Date",
+                            style: const TextStyle().copyWith(
+                                fontSize: 17.5,
+                                fontWeight: FontWeight.w400,
+                                color: Brightness.dark!=MediaQuery.of(context).platformBrightness?kColorScheme.onSecondaryContainer:kDarkColorScheme.onSecondaryContainer
+                            ),
+                          ),
+                          const SizedBox(width: 5,),
+                          Icon(Icons.date_range,color: Brightness.dark!=MediaQuery.of(context).platformBrightness?kColorScheme.onSecondaryContainer:kDarkColorScheme.onSecondaryContainer,)
+                        ],
+                      ),
+                      onPressed: (){
+                        _presentDataPicker();
+                      },
+                    ),
+                  ],
                 ),
-              ),
-              const Spacer(),
-              DropdownButton(
-                value: _selectedCategory,
-                items: Category.values.map(
-                        (category) => DropdownMenuItem(
+                const SizedBox(height: 30,),
+                if (MediaQuery.of(context).size.width <= 600)
+                Row (
+                  children: [
+                  Text(
+                    "Select Category for Expenses : ",
+                    style: const TextStyle().copyWith(
+                        fontSize: 17.5,
+                        color: Brightness.dark!=MediaQuery.of(context).platformBrightness?kColorScheme.onSecondaryContainer:kDarkColorScheme.onSecondaryContainer
+                    ),
+                  ),
+                  const Spacer(),
+                  DropdownButton(
+                    value: _selectedCategory,
+                    items: Category.values.map(
+                            (category) => DropdownMenuItem(
                             value: category,
                             child: Text(
                                 category.name.toUpperCase()
                             )
                         )
-                ).toList(),
-                onChanged: (value) {
-                  if (value== null ) return ;
-                  setState(()=>_selectedCategory = value);
-                },
-              ),
-              const Spacer(),
-            ],
-            ),
-            const Spacer(),
-            Row (
-              children: [
-               Expanded(
-                 child: TextButton(
-                     onPressed: (){Navigator.pop(context);},
-                     child: const Text("cancel")
-                 ),
-               ),
-                Expanded(
-                  child: ElevatedButton(
-                      onPressed: () => setState(() => _submitExpenseData()),
-                      child: const Text (
-                          "Save Expense",
-                      )
+                    ).toList(),
+                    onChanged: (value) {
+                      if (value== null ) return ;
+                      setState(()=>_selectedCategory = value);
+                    },
+                  ),
+                  const Spacer(),
+                ],
+                ),
+                const Spacer(),
+                Padding(
+                  padding: MediaQuery.of(context).size.width<600 ?const EdgeInsets.all(0):const EdgeInsets.symmetric(horizontal: 25),
+                  child: Row (
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                            onPressed: (){Navigator.pop(context);},
+                            child: const Text("cancel")
+                        ),
+                      ),
+                      Expanded(
+                        child: ElevatedButton(
+                            onPressed: () => setState(() => _submitExpenseData()),
+                            child: const Text (
+                              "Save Expense",
+                            )
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
-            ),
-          ],
-        ),
-    );
+            )
+        );
+      },);
   }
 }
