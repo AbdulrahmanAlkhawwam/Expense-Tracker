@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:acodemind02/BoundedListView.dart';
 import 'package:acodemind02/main.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,8 +32,24 @@ class _New_expenseState extends State<New_expense> {
     setState(() => _selectedDate = pickedDate);
   }
 
-  void _submitExpenseData (){
-    if (_titleController.text.trim().isEmpty || double.parse(_amountController.text) <=0 || _selectedDate == null){
+  void _showDialog (){
+    if (Platform.isIOS){
+      showCupertinoDialog(
+          context: context,
+          builder: (ctx)=> CupertinoAlertDialog(
+            title: const Text("invalid Error"),
+            content: const Text ("Please ... make sure for Title , Amount and Date :)"),
+            actions: [
+              TextButton(
+                child: const Text("Fix Error"),
+                onPressed: ()=> Navigator.pop(ctx),
+              )
+            ],
+
+          )
+      );
+    }
+    else{
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -45,6 +63,12 @@ class _New_expenseState extends State<New_expense> {
           ],
         ),
       );
+    }
+  }
+
+  void _submitExpenseData (){
+    if (_titleController.text.trim().isEmpty || double.parse(_amountController.text) <=0 || _selectedDate == null){
+      _showDialog();
       return ;
     }
     widget.onAddExpense(Expense(title: _titleController.text, category: _selectedCategory, amount: double.parse(_amountController.text), date: _selectedDate as DateTime));
