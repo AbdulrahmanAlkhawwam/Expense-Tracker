@@ -13,8 +13,6 @@ class Expenses_item extends StatelessWidget {
           height: 80,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(15)),
-            //color: Colors.indigo,
-            //border: Border.all(/*color: Colors.grey.shade100*/),
           ),
           child: Padding(
             padding: const EdgeInsets.all(10),
@@ -24,27 +22,31 @@ class Expenses_item extends StatelessWidget {
                 Row(
                   children: [
                     Text(expense.title,
-                      style: const TextStyle(/*color: Colors.white,*/
-                          fontSize: 22.5, fontWeight: FontWeight.w500),),
+                      style: const TextStyle(
+                          fontSize: 22.5, fontWeight: FontWeight.w500)
+                      ,),
                     const Spacer(),
                     Icon(
-                      categoryIcon[expense.category], /*color: Colors.white,*/),
+                      categoryIcon[expense.category],
+                    ),
                   ],
                 ),
                 const Spacer(),
                 Row(
                   children: [
-                    Text("\$ ${expense.amount}",
-                      style: const TextStyle(/*color: Colors.white*/),),
+                    Text(
+                      "\$ ${expense.amount}",
+                    ),
                     const Spacer(),
-                    Text(expense.formattedDate,
-                      style: const TextStyle(/*color: Colors.white*/),)
+                    Text(
+                      expense.formattedDate,
+                    ),
                   ],
                 )
               ],
             ),
           ),
-        )
+        ),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:acodemind02/main.dart';
 import 'package:flutter/material.dart';
 import '../models/Expense.dart';
 
@@ -98,19 +99,20 @@ class _New_expenseState extends State<New_expense> {
                 const SizedBox(width: 15),
                 Expanded(
                   child: IconButton(
-                    icon:const  Row (
+                    icon: Row (
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text (
                           "Selected Date",
-                          style: TextStyle(
+                          style: const TextStyle().copyWith(
                               fontSize: 17.5,
-                              fontWeight: FontWeight.w400
+                              fontWeight: FontWeight.w400,
+                              color: Brightness.dark!=MediaQuery.of(context).platformBrightness?kColorScheme.onSecondaryContainer:kDarkColorScheme.onSecondaryContainer
                           ),
                         ),
-                        SizedBox(width: 5,),
-                        Icon(Icons.date_range)
+                        const SizedBox(width: 5,),
+                        Icon(Icons.date_range,color: Brightness.dark!=MediaQuery.of(context).platformBrightness?kColorScheme.onSecondaryContainer:kDarkColorScheme.onSecondaryContainer,)
                       ],
                     ),
                     onPressed: (){
@@ -122,10 +124,11 @@ class _New_expenseState extends State<New_expense> {
             ),
             const SizedBox(height: 30,),
             Row (children: [
-              const Text(
+               Text(
                 "Select Category for Expenses : ",
-                style: TextStyle(
+                style: const TextStyle().copyWith(
                   fontSize: 17.5,
+                  color: Brightness.dark!=MediaQuery.of(context).platformBrightness?kColorScheme.onSecondaryContainer:kDarkColorScheme.onSecondaryContainer
                 ),
               ),
               const Spacer(),
@@ -158,15 +161,10 @@ class _New_expenseState extends State<New_expense> {
                ),
                 Expanded(
                   child: ElevatedButton(
-                      style: const ButtonStyle(
-                          //backgroundColor: MaterialStateColor.resolveWith((states) => Colors.indigo)
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _submitExpenseData();
-                        });
-                      },
-                      child: const Text ("Save Expense",style: TextStyle(/*color: Colors.white*/),)
+                      onPressed: () => setState(() => _submitExpenseData()),
+                      child: const Text (
+                          "Save Expense",
+                      )
                   ),
                 ),
               ],

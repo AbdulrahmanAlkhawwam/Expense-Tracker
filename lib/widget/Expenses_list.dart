@@ -27,7 +27,6 @@ class Expenses_list extends StatelessWidget{
                 )
               ),
             ),
-            /*color: Colors.redAccent,*/
           ),
 
             confirmDismiss: (DismissDirection direction) async {
@@ -36,7 +35,7 @@ class Expenses_list extends StatelessWidget{
             },
           child: Expenses_item(expense: expenses[index]),
         ),
-        separatorBuilder: (context, index)=>const SizedBox(height: 10,),
+        separatorBuilder: (context, index)=> const SizedBox(height: 10,),
         itemCount: expenses.length
     );
   }

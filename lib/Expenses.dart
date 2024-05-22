@@ -1,7 +1,6 @@
 import 'package:acodemind02/widget/Chart.dart';
 import 'package:acodemind02/widget/Expenses_list.dart';
 import 'package:acodemind02/widget/New_expense.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'models/Expense.dart';
 
@@ -47,11 +46,7 @@ class _ExpensesState extends State<Expenses>{
         duration: const Duration(seconds: 3),
         action: SnackBarAction(
             label: "Undo",
-            onPressed: () {
-              setState(() {
-                _registeredExpenses.insert(expenseIndex,expense);
-              });
-            }),
+            onPressed: () => setState(() => _registeredExpenses.insert(expenseIndex,expense))),
       ),
     );
   }
@@ -68,7 +63,6 @@ class _ExpensesState extends State<Expenses>{
           Icon(
             Icons.report_gmailerrorred,
             size: 150,
-            /*color: Colors.grey.shade400,*/
           ),
           Center(
             child: Text(
@@ -76,7 +70,6 @@ class _ExpensesState extends State<Expenses>{
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w800,
-                /*color: Colors.grey.shade400*/
               ),
             ),
           ),
@@ -127,17 +120,13 @@ class _ExpensesState extends State<Expenses>{
 
     return Scaffold(
       appBar: AppBar(
-        //backgroundColor: Colors.indigo,
         title: const Text (
           "Flutter Expenses Tracker",
-           style: TextStyle(
-             /*  color: Colors.white*/
-           ),
         ),
         actions: [
           IconButton(
               onPressed: _openAddExpensesOverlay,
-              icon: const Icon(Icons.add,/*color: Colors.white,*/)
+              icon: const Icon(Icons.add)
           )
         ],
       ),

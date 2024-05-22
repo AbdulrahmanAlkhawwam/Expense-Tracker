@@ -56,11 +56,11 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: ThemeData().textTheme.copyWith(
           bodyMedium: const TextStyle().copyWith(
-            color: kColorScheme.onSecondaryContainer
+            color: kColorScheme.primary
           )
         ),
         iconTheme: const IconThemeData().copyWith(
-          color: kColorScheme.onSecondaryContainer
+          color: kColorScheme.primary
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
